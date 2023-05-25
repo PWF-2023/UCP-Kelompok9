@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,12 +21,19 @@ class TodoController extends Controller
         $todosCompleted = Todo::where('user_id', auth()->user()->id)
         ->where('is_complete', true)
         ->count();
-    return view('todo.index', compact('todos', 'todosCompleted'));
+        $categories = Category::where("user_id", auth()->user()->id)->get();
+
+        return view('todo.index', compact('todos', 'todosCompleted', 'categories'));
     }
 
     public function create()
     {
-        return view('todo.create');
+
+        $categories = Category::where('user_id', auth()->user()->id)
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('todo.create', compact('categories'));
     }
 
     public function edit(Todo $todo)
@@ -37,7 +45,9 @@ class TodoController extends Controller
 
             //CODE AFTER REFACTORING
             if (auth()->user()->id = $todo->user_id){
-              return view('todo.edit', compact('todo'));
+                $categories = Category::where('user_id', auth()->user()->id)
+                ->get();
+            return view('todo.edit', compact('todo', 'categories'));
             }
             return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
 
@@ -50,6 +60,7 @@ class TodoController extends Controller
         ]);
         $todo->update([
             'title' => ucfirst($request->title),
+            'category_id' => ucfirst($request->category_id)
         ]);
 
         return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
@@ -107,6 +118,21 @@ class TodoController extends Controller
             'title' => 'required|max:255',
             ]);
 
+        // Practical
+        // $todo = new Todo;
+        // $todo->title = $request->title;
+        // $todo->user_id = auth()->user()->id;
+        // $todo->save();
+
+        // Query Builder way
+        // DB::table('todos)->insert([
+        // 'title' => $request->title,
+        // 'user_id' => auth()->user()->id,
+        // 'created_at' => now(),
+        // 'updated_at' => now(),
+        // ])
+
+        // Eloquent Way - Readable
 
         $todo = Todo::create([
             'title' => ucfirst($request->title),
