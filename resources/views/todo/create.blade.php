@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="front-semibold text-x1 text-gray-800 dark:text-gray-200 leading-tight">
-            {{__('Todo') }}
+            {{ __('Todo') }}
         </h2>
     </x-slot>
 
@@ -14,16 +14,16 @@
                         @method('post')
                         <div class="mb-6">
                             <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input id="title" name="title" type="text" class="block w-full mt-1" required
-                            autofocus autocomplete="title" />
+                            <x-text-input id="title" name="title" type="text" class="block w-full mt-1"
+                                required autofocus autocomplete="title" />
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
                         <div class="mb-6">
-                            <x-input-label for="title" :value="__('Category')" />
+                            <x-input-label for="title":value="__('Category')" />
                             <x-select name="category_id" id="category_id" class="block w-full mt-1">
                                 <option value=""> Pilih Category </option>
-                                @foreach($categories as $category)
-                                <option value=" {{$category->id}} ">{{$category->title}}</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
                                 @endforeach
                             </x-select>
                         </div>

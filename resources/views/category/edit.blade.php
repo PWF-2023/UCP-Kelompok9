@@ -23,7 +23,6 @@
                             <x-cancel-button href="{{ route('category.index') }}" />
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
