@@ -13,4 +13,14 @@ class Category extends Model
         'title',
         'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    // Add relation to Todo Model
+    public function todos()
+    {
+        return $this->hasMany(Todo::class);
+    }
 }

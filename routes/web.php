@@ -58,8 +58,9 @@ Route::middleware('auth')->group(function () {
     //     Route::patch('/user/{user}/removeadmin', [UserController::class, 'removeadmin'])->name('user.removeadmin');
 
     // });
-    Route::get('category', [CategoryController::class, 'index'])->name(('category.index'));
 
+
+    Route::resource('category', CategoryController::class)->except(['show']);
 
 
     Route::middleware('admin')->group(function () {
