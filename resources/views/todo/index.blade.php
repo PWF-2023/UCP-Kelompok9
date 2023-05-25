@@ -40,6 +40,9 @@
                                 <th scope="col" class="px-6 py-3">
                                                 Title
                                 </th>
+                                <th scope="col" class="px-6 py-3">
+                                                Category
+                                </th>
                                 <th scope="col" class="hidden px-6 py-3 md:block">
                                                 Status
                                 </th>
@@ -55,20 +58,23 @@
                                     <a href="{{ route('todo.edit', $todo) }}" class="hover:underline">{{ $todo->title }}</a>
 
                                 </td>
+                                 <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                    @if ($todo->category_id == null)
+                                        <span>Empty</span>
+                                    @else
+                                        {{ $todo->category->title }}
+                                    @endif
+                                </td>
                                 <td class ="hidden px-6 py-4 md:block">
                                     @if ($todo->is_complete == false)
-
                                     <span
                                         class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
                                                         Outgoing
-
                                     </span>
-
                                     @else
                                     <span
                                         class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
                                                         Completed
-
                                     </span>
                                     @endif
                                 </td>
