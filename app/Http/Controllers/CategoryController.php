@@ -22,7 +22,6 @@ class CategoryController extends Controller
         return view('category.create');
     }
 
-    // return view category.edit
     public function edit(Category $category)
     {
         if (auth()->user()->id == $category->user_id) {
@@ -37,9 +36,8 @@ class CategoryController extends Controller
         $request->validate([
             'title' => 'required|max:255',
         ]);
-
         $category->update([
-            'title' => ucfirst($request->name),
+            'title' => ucfirst($request->title),
         ]);
 
         return redirect()->route('category.index')->with('success', 'Category updated successfully!');
